@@ -15,15 +15,15 @@ accessPoint = network.WLAN(network.AP_IF)
 accessPoint.active(True)
 accessPoint.config(essid="Hamster Tracker", password="Gjba1976")
 
-client = network.WLAN(network.STA_IF)
-client.active(True)
-client.config(dhcp_hostname="Hamster Tracker")
-client.connect("Williamson WiFi", "Gjba1976")
+# client = network.WLAN(network.STA_IF)
+# client.active(True)
+# client.config(dhcp_hostname="Hamster Tracker")
+# client.connect("Williamson WiFi", "Gjba1976")
 
 
-print("Connecting", end="")
-while not client.isconnected():
-    print(".", end="")
-    sleep(0.25)
-print("")
-print(client.ifconfig())
+# print("Connecting", end="")
+# while not client.isconnected():
+#     print(".", end="")
+#     sleep(0.25)
+# print("")
+print(accessPoint.ifconfig())
