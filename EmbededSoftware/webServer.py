@@ -10,6 +10,7 @@ class WebServer:
         self.addr = socket.getaddrinfo('0.0.0.0', port)[0][-1]
         self.s.bind(self.addr)
         self.s.listen(1)
+        self.MIMETypes = {"html": "text/html", "css": "text/css"}
 
     def getFile(self, fileName):
         try:
@@ -26,9 +27,19 @@ class WebServer:
             url = url.split("&")
             for var in url:
                 var, value = var.split("=")
+                value = value.replace("%20", " ")
+                value = value.replace("+", " ")
                 args[var] = value
 
         return args
+
+    def fileToMIME(self, filename):
+        extension = filename.split(".")[-1]
+
+        for t in self.MIMETypes:
+            if t == extension:
+                return self.MIMETypes[t]
+        return "text/plain"
 
     def serve(self):
         cl, addr = self.s.accept()
@@ -38,12 +49,11 @@ class WebServer:
         request = str(request).split(" ")[1]
 
         arguments = ""
+        connectionType = "text/plain"
 
         if "?" in request:
             print(request.split("?"))
             request, arguments = request.split("?")
-
-        print(request, request in self.endpoints)
 
         if request == "/":
             request = "index.html"
@@ -53,14 +63,13 @@ class WebServer:
         else:
             response = self.getFile(request)
 
+        connectionType = self.fileToMIME(request)
+
         cl.send('HTTP/1.1 200 OK\n')
-        cl.send('Content-Type: text/html\n')
+        cl.send('Content-Type: ' + connectionType + '\n')
         cl.send('Connection: close\n\n')
 
-        while True:
-            print("Looping")
-            cl.sendall("Connected")
-            sleep(1)
+        cl.sendall(response)
         cl.close()
 
     def addCustomEndpoint(self, endpoint, callback):

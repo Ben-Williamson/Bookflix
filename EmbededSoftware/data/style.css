@@ -12,7 +12,7 @@ html {
 
   background: linear-gradient(to right, #c2e59c, #64b3f4);
   color: #333;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 #container {
   background-color: white;
@@ -22,7 +22,7 @@ html {
   width: 80vw;
   margin-top: 50vh;
   transform: translateY(-50%);
-  max-width: 1000px;
+  max-width: 600px;
 }
 select,
 input {
@@ -51,10 +51,53 @@ input {
   padding: 1rem;
   font-size: 3rem;
   border-radius: 10px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
 }
+
+#password {
+  width: 100%;
+}
+
 #submit {
   background-color: rgb(26, 152, 187);
   color: white;
   margin-top: 1rem;
   box-sizing: border-box;
+}
+
+#errorMessage {
+  background-color: rgba(255, 0, 0, 0.2);
+  padding: 20px;
+  border-style: solid;
+  border-radius: 1vh;
+  border-color: rgba(255, 0, 0, 0.6);
+  border-width: 3px;
+  display: none;
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #64b3f4;
+  border-color: #64b3f4 transparent #64b3f4 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

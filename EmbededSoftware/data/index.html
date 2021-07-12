@@ -1,21 +1,143 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div id="container">
-            <h3>Welcome to</h3>
-            <h1>Hamster Tracker</h1>
-            <h2>NETWORK SETTINGS</h2>
-            <form action="connect">
-                <select name="ssid" id="ssid">
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
 
-                    <option value="" disabled selected>Select your network</option>
-                </select>
-                <br>
-                <input name='password' type='password' placeholder='Password' id='password'>
-                <input type='submit' id='submit' value='Connect'>
-            </form>
-        </div>
-    </body>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="loading" style="display: none">
+        <div class="lds-dual-ring"></div>
+        <h3 id="loadingMessage"></h3>
+      </div>
+
+      <div id="success" style="display: none">
+        <svg
+          version="1.1"
+          id="Capa_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 52 52"
+          style="enable-background: new 0 0 52 52; height: 10vh"
+          xml:space="preserve"
+        >
+          <g>
+            <path
+              d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26   S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"
+            />
+            <path
+              d="M38.252,15.336l-15.369,17.29l-9.259-7.407c-0.43-0.345-1.061-0.274-1.405,0.156c-0.345,0.432-0.275,1.061,0.156,1.406   l10,8C22.559,34.928,22.78,35,23,35c0.276,0,0.551-0.114,0.748-0.336l16-18c0.367-0.412,0.33-1.045-0.083-1.411   C39.251,14.885,38.62,14.922,38.252,15.336z"
+            />
+          </g>
+        </svg>
+        <h3 id="successMessage"></h3>
+      </div>
+
+      <div id="form" style="display: none">
+        <h3>Welcome to</h3>
+        <h1>Hamster Tracker</h1>
+        <h2>NETWORK SETTINGS</h2>
+        <form id="connect">
+          <select name="ssid" id="ssid">
+            <option value="" disabled selected>Select your network</option>
+          </select>
+          <br />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            id="password"
+          />
+          <input type="submit" id="submit" value="Connect" />
+        </form>
+
+        <h4 id="errorMessage"></h4>
+      </div>
+    </div>
+
+    <script>
+      function loadingScreen(message) {
+        document.getElementById("loadingMessage").innerText = message;
+        document.getElementById("form").style.display = "none";
+        document.getElementById("loading").style.display = "block";
+      }
+
+      function showForm() {
+        document.getElementById("form").style.display = "block";
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("success").style.display = "none";
+      }
+
+      function successMessage(message) {
+        document.getElementById("successMessage").innerText = message;
+        document.getElementById("form").style.display = "none";
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("success").style.display = "block";
+      }
+
+      function addToDropdown(name) {
+        var x = document.getElementById("ssid");
+        var option = document.createElement("option");
+        option.text = name;
+        x.add(option);
+      }
+
+      function showError(message) {
+        document.getElementById("errorMessage").innerText = message;
+        document.getElementById("errorMessage").style.display = "block";
+      }
+
+      loadingScreen("Scanning for networks");
+      fetch("/scan")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.ssids);
+          data.ssids.forEach((ssid) => {
+            addToDropdown(ssid);
+          });
+          showForm();
+        });
+
+      let form = document.getElementById("connect");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        ssid = form.elements["ssid"].value;
+        password = form.elements["password"].value;
+
+        loadingScreen("Connecting to " + ssid);
+
+        fetch("/connect?ssid=" + ssid + "&password=" + password);
+
+        var attempts = 0;
+        function testConnection() {
+          fetch("/connectionStatus")
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.connected == true) {
+                clearInterval(test);
+                successMessage("Connected to " + ssid);
+                console.log("success");
+              } else {
+                attempts += 1;
+              }
+            });
+          console.log(attempts);
+
+          if (attempts > 10) {
+            clearInterval(test);
+            showError("Failed to connect.");
+            showForm();
+          }
+        }
+
+        test = setInterval(testConnection, 1000);
+      });
+    </script>
+  </body>
 </html>
