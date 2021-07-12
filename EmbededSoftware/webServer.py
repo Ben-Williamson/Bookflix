@@ -10,7 +10,8 @@ class WebServer:
         self.addr = socket.getaddrinfo('0.0.0.0', port)[0][-1]
         self.s.bind(self.addr)
         self.s.listen(1)
-        self.MIMETypes = {"html": "text/html", "css": "text/css"}
+        self.MIMETypes = {"html": "text/html",
+                          "css": "text/css", "js": "text/javascript"}
 
     def getFile(self, fileName):
         try:
@@ -43,34 +44,43 @@ class WebServer:
 
     def serve(self):
         cl, addr = self.s.accept()
-        print('client connected from', addr)
 
         request = cl.recv(1024)
-        request = str(request).split(" ")[1]
+        try:
+            request = str(request).split(" ")[1]
 
-        arguments = ""
-        connectionType = "text/plain"
+            arguments = ""
+            connectionType = "text/plain"
 
-        if "?" in request:
-            print(request.split("?"))
-            request, arguments = request.split("?")
+            if "?" in request:
+                print(request.split("?"))
+                request, arguments = request.split("?")
 
-        if request == "/":
-            request = "index.html"
+            if request == "/":
+                request = "index.html"
 
-        if request in self.endpoints:
-            response = self.endpoints[request](self.splitToArgs(arguments))
-        else:
-            response = self.getFile(request)
+            if request in self.endpoints:
+                response = self.endpoints[request](self.splitToArgs(arguments))
+            else:
+                response = self.getFile(request)
 
-        connectionType = self.fileToMIME(request)
+            print(request)
 
-        cl.send('HTTP/1.1 200 OK\n')
-        cl.send('Content-Type: ' + connectionType + '\n')
-        cl.send('Connection: close\n\n')
+            connectionType = self.fileToMIME(request)
 
-        cl.sendall(response)
-        cl.close()
+            cl.send('HTTP/1.1 200 OK\n')
+            cl.send('Content-Type: ' + connectionType + '\n')
+            cl.send('Connection: close\n\n')
+
+            cl.sendall(response)
+            cl.close()
+        except:
+            cl.send('HTTP/1.1 500 Internal Server Error\n')
+            cl.send('Content-Type: text/plain; charset=utf-8 \n')
+            cl.send('Connection: close\n\n')
+
+            cl.sendall("Internal Server Error")
+            cl.close()
 
     def addCustomEndpoint(self, endpoint, callback):
         self.endpoints[endpoint] = callback
