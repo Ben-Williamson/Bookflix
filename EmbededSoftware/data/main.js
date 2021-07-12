@@ -61,6 +61,8 @@ function loadingScreen(message) {
             clearInterval(test);
             successMessage("Connected to " + ssid);
             console.log("success");
+
+            fetch("/closeServer");
           } else {
             attempts += 1;
           }

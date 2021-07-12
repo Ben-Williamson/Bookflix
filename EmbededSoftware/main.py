@@ -1,4 +1,6 @@
+from machine import Pin
 from webServer import WebServer
+import time
 import json
 
 server = WebServer(80)
@@ -25,11 +27,28 @@ def status(args={}):
     return json.dumps({"connected": client.isconnected()})
 
 
+def closeServer(args={}):
+    global runServer
+    runServer = False
+    return "done"
+
+
 server.addCustomEndpoint("/scan", scan)
 server.addCustomEndpoint("/connect", connect)
 server.addCustomEndpoint("/connectionStatus", status)
+server.addCustomEndpoint("/closeServer", closeServer)
 
 print(status())
 
-while True:
+runServer = True
+startTime = 0
+
+while runServer:
     server.serve()
+
+accessPoint.active(False)
+
+p = Pin(2, Pin.IN, Pin.PULL_UP)
+
+while True:
+    print(p.value())
