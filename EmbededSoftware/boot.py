@@ -11,7 +11,7 @@ clear()
 
 accessPoint = network.WLAN(network.AP_IF)
 accessPoint.active(True)
-accessPoint.config(essid="Hamster Tracker", password="Gjba1976")
+accessPoint.config(essid="Hamster Tracker")
 
 client = network.WLAN(network.STA_IF)
 client.active(True)
