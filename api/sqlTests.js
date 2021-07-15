@@ -13,23 +13,27 @@ con.connect(function (err) {
 })
 
 function addUser(username, password, email) {
-    bcrypt.hash(password, 10, (err, hash) => {
-        var sql = `INSERT INTO users (username, password, email) VALUES ('${username}', '${hash}', '${email}')`;
-        con.query(sql, function (err, result) {
-            if (err.code == "ER_DUP_ENTRY") {
-                console.log("Duplicate")
-            }
-        });
 
-    });
+    return new Promise(resolve => {
+
+        bcrypt.hash(password, 10, (err, hash) => {
+            var sql = `INSERT INTO users (username, password, email) VALUES ('${username}', '${hash}', '${email}')`;
+            con.query(sql, function (err, result) {
+                if (err) resolve(err.code);
+                else resolve(true);
+            });
+        });
+    })
 }
 
-async function comparePassword(username, password) {
+function comparePassword(username, password) {
 
     return new Promise(resolve => {
         var sql = `SELECT * FROM users WHERE username='${username}'`;
         con.query(sql, function (error, result) {
-            bcrypt.compare(password, result[0].password, function (err, res) {
+            if (error) resolve(false);
+            bcrypt.compare(password, result[0].password, function (error, res) {
+                if (error) resolve(false);
                 resolve(res);
             });
         });
@@ -38,7 +42,9 @@ async function comparePassword(username, password) {
 
 async function main() {
 
-    test = await comparePassword("ben", "Gjba1976");
+    // test = await comparePassword("ben", "Gjba1976");
+
+    test = await addUser("b", "dfsfd", "sdfsdf");
 
     console.log(test);
 }
