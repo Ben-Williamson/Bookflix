@@ -14,12 +14,14 @@ bcrypt.hash("yourPassword", 10, (err, hash) => {
 });
 
 function addUser(username, password, email) {
-    con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-        var sql = `INSERT INTO users (username, password, email) VALUES ('${username}', '${password}', '${email}')`;
-        con.query(sql, function (err, result) {
+    bcrypt.hash(password, 10, (err, hash) => {
+        con.connect(function (err) {
             if (err) throw err;
+            console.log("Connected!");
+            var sql = `INSERT INTO users (username, password, email) VALUES ('${username}', '${password}', '${email}')`;
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+            });
         });
     });
 }
