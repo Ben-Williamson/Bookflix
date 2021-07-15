@@ -8,23 +8,30 @@ var con = mysql.createConnection({
     database: "HamsterTracker"
 });
 
-bcrypt.hash("yourPassword", 10, (err, hash) => {
-    // Now we can store the password hash in db.
-    console.log(hash)
-});
+con.connect(function (err) {
+    if (err) throw err;
+})
 
 function addUser(username, password, email) {
     bcrypt.hash(password, 10, (err, hash) => {
-        con.connect(function (err) {
-            if (err) throw err;
-            console.log("Connected!");
-            var sql = `INSERT INTO users (username, password, email) VALUES ('${username}', '${password}', '${email}')`;
-            con.query(sql, function (err, result) {
-                if (err) throw err;
-            });
+        var sql = `INSERT INTO users (username, password, email) VALUES ('${username}', '${hash}', '${email}')`;
+        con.query(sql, function (err, result) {
+            if (err.code == "ER_DUP_ENTRY") {
+                console.log("Duplicate")
+            }
+        });
+
+    });
+}
+addUser("ben", "Gjba1976", "benmacwill@gmail.com");
+
+function comparePassword(username, password) {
+    var sql = `SELECT * FROM users WHERE username='${username}'`;
+    con.query(sql, function (error, result) {
+        bcrypt.compare(password, result[0].password, function (err, res) {
+            console.log(res);
         });
     });
 }
 
-
-addUser("ben", "Gjba1976", "benmacwill@gmail.com");
+comparePassword("ben", "Gjba176")
