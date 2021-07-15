@@ -24,11 +24,23 @@ function addUser(username, password, email) {
     });
 }
 
-function comparePassword(username, password) {
-    var sql = `SELECT * FROM users WHERE username='${username}'`;
-    con.query(sql, function (error, result) {
-        bcrypt.compare(password, result[0].password, function (err, res) {
-            console.log(res);
+async function comparePassword(username, password) {
+
+    return new Promise(resolve => {
+        var sql = `SELECT * FROM users WHERE username='${username}'`;
+        con.query(sql, function (error, result) {
+            bcrypt.compare(password, result[0].password, function (err, res) {
+                resolve(res);
+            });
         });
-    });
+    })
 }
+
+async function main() {
+
+    test = await comparePassword("ben", "Gjba1976");
+
+    console.log(test);
+}
+
+main();
