@@ -23,7 +23,6 @@ function addUser(username, password, email) {
 
     });
 }
-addUser("ben", "***REMOVED***", "benmacwill@gmail.com");
 
 function comparePassword(username, password) {
     var sql = `SELECT * FROM users WHERE username='${username}'`;
@@ -33,5 +32,3 @@ function comparePassword(username, password) {
         });
     });
 }
-
-comparePassword("ben", "***REMOVED***")
