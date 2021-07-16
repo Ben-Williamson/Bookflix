@@ -16,6 +16,7 @@ class Login extends React.Component {
 
         fetch('http://192.168.0.21:3000/auth', {
             method: 'post',
+            credentials: 'include',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
