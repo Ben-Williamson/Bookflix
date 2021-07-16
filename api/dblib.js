@@ -32,10 +32,14 @@ class Database {
             var sql = `SELECT * FROM users WHERE username='${username}'`;
             this.con.query(sql, function (error, result) {
                 if (error) resolve(false);
-                bcrypt.compare(password, result[0].password, function (error, res) {
-                    if (error) resolve(false);
-                    resolve(res);
-                });
+                if (result.length > 0) {
+                    bcrypt.compare(password, result[0].password, function (error, res) {
+                        if (error) resolve(false);
+                        resolve(res);
+                    });
+                } else {
+                    resolve("user not found")
+                }
             });
         })
     }
