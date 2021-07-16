@@ -37,7 +37,11 @@ app.use(session({
 app.post("/auth", async function (req, res) {
   var success = false;
   if (req.body.username && req.body.password) {
-    success = await db.comparePassword(req.body.username, req.body.password);
+    var response = await db.comparePassword(req.body.username, req.body.password);
+
+    if (response == true) {
+      success = true;
+    }
   }
 
   console.log(req.body)
@@ -45,7 +49,7 @@ app.post("/auth", async function (req, res) {
   req.session.loggedin = success;
   req.session.username = req.body.username;
 
-  res.send(success);
+  res.send({ success: success });
 });
 
 app.post("/logout", function (req, res) {
