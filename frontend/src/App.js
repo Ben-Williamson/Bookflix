@@ -1,5 +1,7 @@
 import { useStore } from 'react-stores';
 import { appState } from './store';
+import Login from './Login/Login';
+import Logout from './Logout/Logout';
 import './App.css';
 
 function login() {
@@ -26,14 +28,15 @@ function App() {
 
   if (state.loggedIn) {
     return (
-      <h1>hello {state.username}</h1>
+      <div>
+        <h1>hello {state.username}</h1>
+        <Logout></Logout>
+      </div>
+
     )
   }
   return (
-    <div>
-      <h1>Log in first</h1>
-      <button onClick={login}>log in</button>
-    </div>
+    <Login></Login>
 
   )
 }
