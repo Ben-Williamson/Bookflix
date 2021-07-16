@@ -1,4 +1,4 @@
-var cookieSession = require('cookie-session');
+var session = require('express-session');
 const express = require("express");
 const dblib = require("./dblib");
 
@@ -16,16 +16,20 @@ app.use(express.urlencoded({ extended: true }));
 // handle JSON requests
 app.use(express.json());
 
-// use cookies for session info
-app.use(cookieSession({
-  name: 'session',
-  keys: ["this is the key"],
+// Session Setup
+app.use(session({
 
-  // Cookie Options
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  // It holds the secret key for session
+  secret: 'Your_Secret_Key',
+
+  // Forces the session to be saved
+  // back to the session store
+  resave: true,
+
+  // Forces a session that is "uninitialized"
+  // to be saved to the store
+  saveUninitialized: true
 }))
-
-
 
 app.post("/auth", async function (req, res) {
   var success = false;
@@ -33,8 +37,20 @@ app.post("/auth", async function (req, res) {
     success = await db.comparePassword(req.body.username, req.body.password);
   }
 
-  res.send(success)
+  req.session.loggedin = success;
+  req.session.username = req.body.username;
+
+  console.log(req.body)
+  res.send(success);
 });
+
+app.get("/", function (req, res) {
+  if (req.session.loggedin) {
+    res.send("hi " + req.session.username);
+  } else {
+    res.send("Log in first")
+  }
+})
 
 app.listen(PORT, function () {
   console.log("App running on port " + PORT);
