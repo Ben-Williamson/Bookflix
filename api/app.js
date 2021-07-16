@@ -40,9 +40,13 @@ app.post("/auth", async function (req, res) {
   req.session.loggedin = success;
   req.session.username = req.body.username;
 
-  console.log(req.body)
   res.send(success);
 });
+
+app.post("/logout", function (req, res) {
+  req.session = null;
+  res.send(true);
+})
 
 app.get("/", function (req, res) {
   if (req.session.loggedin) {
