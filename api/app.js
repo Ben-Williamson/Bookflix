@@ -40,6 +40,8 @@ app.post("/auth", async function (req, res) {
     success = await db.comparePassword(req.body.username, req.body.password);
   }
 
+  console.log(req.body)
+
   req.session.loggedin = success;
   req.session.username = req.body.username;
 
@@ -55,7 +57,7 @@ app.get("/", function (req, res) {
   if (req.session.loggedin) {
     res.send("hi " + req.session.username);
   } else {
-    res.send("Log in first")
+    res.send({ "error": "Log in first" })
   }
 })
 
