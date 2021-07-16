@@ -1,6 +1,8 @@
 const express = require("express");
+const dblib = require("./dblib");
 
 const app = express();
+const db = new Database();
 
 const PORT = 3000;
 
@@ -10,9 +12,15 @@ app.use(express.urlencoded({ extended: true }));
 // handle JSON requests
 app.use(express.json());
 
-app.get("/test", function (req, res) {
+app.post("/auth", async function (req, res) {
 
   /// res.send will return the string back to the client
+  console.log(req.body)
+
+  if (req.body.username && req.body.password) {
+    var success = await comparePassword(req.body.username, req.body.password);
+  }
+
   res.send("Hello World!")
 });
 
