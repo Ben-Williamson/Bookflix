@@ -6,7 +6,7 @@ class Database {
         this.con = mysql.createConnection({
             host: "localhost",
             user: "root",
-            password: "***REMOVED***",
+            password: "Gjba1976",
             database: "HamsterTracker"
         });
         this.con.connect(function (err) {
