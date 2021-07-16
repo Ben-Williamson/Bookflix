@@ -1,10 +1,13 @@
-var session = require('express-session');
+const session = require('express-session');
 const express = require("express");
 const dblib = require("./dblib");
-
+const cors = require('cors');
 
 
 const app = express();
+
+app.use(cors());
+
 const db = new dblib.Database();
 
 
