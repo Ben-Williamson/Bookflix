@@ -9,9 +9,16 @@ function login() {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ a: 7, str: 'Some string: &=&' })
+    body: JSON.stringify({ username: "ben", password: 'password' })
   }).then(res => res.json())
-    .then(res => console.log(res));
+    .then(res => {
+      if (res) {
+        appState.setState({
+          loggedIn: true,
+          username: "ben"
+        });
+      }
+    });
 }
 
 function App() {
@@ -19,7 +26,7 @@ function App() {
 
   if (state.loggedIn) {
     return (
-      <h1>hello {appState.username}</h1>
+      <h1>hello {state.username}</h1>
     )
   }
   return (
