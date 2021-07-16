@@ -6,7 +6,10 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://192.168.0.21:3001',
+  credentials: true
+}));
 
 const db = new dblib.Database();
 
@@ -53,8 +56,9 @@ app.post("/auth", async function (req, res) {
 });
 
 app.post("/logout", function (req, res) {
-  req.session = null;
-  res.send(true);
+  req.session.destroy((err) => {
+    res.send('session destroyed');
+  });
 })
 
 app.get("/", function (req, res) {
@@ -62,6 +66,14 @@ app.get("/", function (req, res) {
     res.send("hi " + req.session.username);
   } else {
     res.send({ "error": "Log in first" })
+  }
+})
+
+app.get("/data", function (req, res) {
+  if (req.session.loggedin) {
+    res.send({ "data": req.session.username });
+  } else {
+    res.send({ "data": "no" });
   }
 })
 
