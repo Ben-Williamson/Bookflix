@@ -62,6 +62,7 @@ function loadingScreen(message) {
             successMessage("Connected to " + ssid);
             console.log("success");
 
+            fetch("/saveCreds?ssid=" + ssid + "&password=" + password)
             fetch("/closeServer");
           } else {
             attempts += 1;
