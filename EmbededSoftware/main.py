@@ -74,3 +74,4 @@ p.irq(incCounter, trigger=Pin.IRQ_RISING)
 
 while True:
     print(counter)
+    print("hi")
