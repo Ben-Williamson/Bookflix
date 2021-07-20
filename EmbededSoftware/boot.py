@@ -1,4 +1,6 @@
 import network
+import time
+import json
 
 
 def clear():
@@ -18,4 +20,13 @@ client.active(True)
 client.config(dhcp_hostname="Hamster Tracker")
 client.disconnect()
 
-print(accessPoint.ifconfig())
+with open("storedCreds.json", "r") as f:
+    data = json.loads(f.read())
+    f.close()
+
+client.connect(data["ssid"], data["password"])
+
+startTime = time.time()
+while not client.isconnected() and time.time() - startTime < 10:
+    print(".", end="")
+    time.sleep(1)
