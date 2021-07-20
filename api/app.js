@@ -61,6 +61,10 @@ app.post("/logout", function (req, res) {
   });
 })
 
+app.post("/tick", function (req, res) {
+  console.log(req.body.trackerID, req.body.time);
+});
+
 app.get("/", function (req, res) {
   if (req.session.loggedin) {
     res.send("hi " + req.session.username);

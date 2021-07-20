@@ -51,4 +51,6 @@ accessPoint.active(False)
 p = Pin(2, Pin.IN, Pin.PULL_UP)
 
 while True:
-    print(p.value())
+    if p.value() == 1:
+        print("high")
+        time.sleep(100)
