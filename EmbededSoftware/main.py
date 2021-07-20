@@ -56,22 +56,19 @@ while runServer:
 
 accessPoint.active(False)
 
-counter = 0
 lastTrigger = time.time_ns()
 
 
-def incCounter(pin):
-    global counter
+def sendTick(pin):
     global lastTrigger
 
     if time.time_ns() - lastTrigger > 300000000:
-        counter += 1
+        print("tick recived")
         lastTrigger = time.time_ns()
 
 
 p = Pin(2, Pin.IN, Pin.PULL_UP)
-p.irq(incCounter, trigger=Pin.IRQ_RISING)
+p.irq(sendTick, trigger=Pin.IRQ_RISING)
 
 while True:
-    print(counter)
-    print("hi")
+    pass
