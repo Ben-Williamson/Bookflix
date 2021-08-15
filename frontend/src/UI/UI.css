@@ -1,0 +1,27 @@
+#sidebar {
+  width: 5vw;
+  height: 100vh;
+  background-color: lightblue;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#sidebar h1 {
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 50px;
+  cursor: pointer;
+}
+
+#sidebar .active {
+  color: red;
+}
+
+#content {
+  width: 95vw;
+  height: 100vh;
+  position: absolute;
+  left: 5vw;
+  top: 0;
+}
