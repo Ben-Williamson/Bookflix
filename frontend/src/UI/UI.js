@@ -1,11 +1,13 @@
 import "./UI.css";
 import { Link, Element } from "react-scroll";
-import React from "react";
+import React, {useState} from "react";
 
 function UI(props) {
+  const [sidebarExtended, setSidebar] = useState(false);
+
   return (
-    <div>
-      <div id="sidebar">
+    <div class={sidebarExtended ? "sidebarExtended" : "sidebarClosed"}>
+      <div id="sidebar" onMouseEnter={function() {setSidebar(true)}} onMouseLeave={function() {setSidebar(false)}}>
         <nav>
           {props.children.map(function (child, index) {
             return (
@@ -18,7 +20,12 @@ function UI(props) {
                 smooth={true}
                 duration={500}
               >
-                <h1>{child.props.icon}</h1>
+                <b></b>
+                <b></b>
+                  <ion-icon name={child.props.icon}></ion-icon>
+                  {child.props.name}
+                
+                
               </Link>
             );
           })}
@@ -29,7 +36,7 @@ function UI(props) {
         {props.children.map(function (child, index) {
           return (
             <Element key={index} name={child.props.name} className="element">
-              {child.props.children}
+              {child}
             </Element>
           );
         })}
