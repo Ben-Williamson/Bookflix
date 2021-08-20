@@ -1,10 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600&display=swap");
+
 html,
 body {
   margin: 0;
   padding: 0;
+  font-family: "Poppins", sans-serif;
+  --background-color: rgb(25, 34, 61);
+  --box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-
-
 
 .leaflet-container {
   width: 100%;
@@ -12,5 +15,9 @@ body {
 }
 
 .page {
+  overflow: auto;
+}
+
+.page:last-of-type {
   height: 100vh;
 }

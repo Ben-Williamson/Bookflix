@@ -6,7 +6,7 @@ function UI(props) {
   const [sidebarExtended, setSidebar] = useState(false);
 
   return (
-    <div class={sidebarExtended ? "sidebarExtended" : "sidebarClosed"}>
+    <div className={sidebarExtended ? "sidebarExtended" : "sidebarClosed"}>
       <div id="sidebar" onMouseEnter={function() {setSidebar(true)}} onMouseLeave={function() {setSidebar(false)}}>
         <nav>
           {props.children.map(function (child, index) {
@@ -35,8 +35,8 @@ function UI(props) {
       <div id="content">
         {props.children.map(function (child, index) {
           return (
-            <Element key={index} name={child.props.name} className="element">
-              {child}
+            <Element key={index} name={child.props.name} className={"page " + child.props.className}>
+              {child.props.children}
             </Element>
           );
         })}

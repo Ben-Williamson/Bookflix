@@ -1,29 +1,34 @@
 import { useStore } from "react-stores";
 import { appState } from "./store";
 import Login from "./Login/Login";
-import Logout from "./Logout/Logout";
+import HomePage from "./HomePage/HomePage";
 
 import UI from "./UI/UI";
 
 import "./App.css";
 
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 
-function getData() {
-  fetch("http://192.168.0.21:3000/data", { credentials: "include" })
-    .then((res) => res.json())
-    .then((res) => {
-      console.log(res);
-    });
-}
+// function getData() {
+//   fetch("http://192.168.0.5:3000/data", { credentials: "include" })
+//     .then((res) => res.json())
+//     .then((res) => {
+//       console.log(res);
+//     });
+// }
 
 function App() {
   const state = useStore(appState);
 
+  if (state.loggedIn) {
+
+
   return (
     <UI>
-      <div icon="home-outline" name="home" className="page">
-        home
+      <div icon="home-outline" name="home">
+        
+        <HomePage></HomePage>
+
       </div>
       <div icon="map-outline" name="map">
         <MapContainer
@@ -35,11 +40,14 @@ function App() {
         />
       </MapContainer>
       </div>
-      <div icon="bar-chart-outline" name="leaderboard" className="page">
+      <div icon="bar-chart-outline" name="leaderboard">
         leaderboard
       </div>
     </UI>
   );
+  }
+
+  return <Login></Login>;
 
   // if (state.loggedIn) {
   //   return (
