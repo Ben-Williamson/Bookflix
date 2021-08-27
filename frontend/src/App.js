@@ -9,14 +9,6 @@ import UI from "./UI/UI";
 
 import "./App.css";
 
-// function getData() {
-//   fetch("http://192.168.0.5:3000/data", { credentials: "include" })
-//     .then((res) => res.json())
-//     .then((res) => {
-//       console.log(res);
-//     });
-// }
-
 function App() {
   const state = useStore(appState);
 
@@ -37,33 +29,6 @@ function App() {
   }
 
   return <Login></Login>;
-
-  // if (state.loggedIn) {
-  //   return (
-  //     <div>
-  //       <h1>hello {state.username}</h1>
-
-  //       <button onClick={getData}>Get data</button>
-
-  //       <Logout></Logout>
-  //     </div>
-
-  //   )
-  // }
-  // return (
-  //   <div>
-  //     <MapContainer
-  //       center={{ lat: 51.505, lng: -0.09 }}
-  //       zoom={13}>
-  //       <TileLayer
-  //         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  //         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  //       />
-  //     </MapContainer>
-  //     <Login></Login>
-  //   </div>
-
-  // )
 }
 
 export default App;
