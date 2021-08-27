@@ -1,7 +1,6 @@
 import { appState } from "../store";
 import { useStore } from "react-stores";
 import { Line } from "react-chartjs-2";
-import Logout from "../Logout/Logout";
 import "./homePage.css";
 
 function HomePage(props) {
@@ -56,9 +55,76 @@ function HomePage(props) {
 
   return (
     <div id="homePage">
+
+
+
+
+      <h1>Hi, {state.userDetails.forename}</h1>
+
+
+      <div className="left">
+        <h2>Latest Activity</h2>
+      <div id="statContainer">
+        <div className="stat">
+                      <h3>Total Distance</h3>
+          <h1>24<span className="unit">km</span></h1>
+
+        </div>
+
+        <div className="stat">
+          <h3>Max Speed</h3>
+          <h1>4<span className="unit">kph</span></h1>
+        </div>
+        
+        <div className="stat">
+          <h3>Start Time</h3>
+          <h1>2:30<span className="unit">am</span></h1>
+        </div>
+      </div>
+
+      <br></br>
+      <h2>This Year</h2>
+      <div id="graph">
+      <Line data={data} options={options} />
+      </div>
+      </div>
+      
+      <div className="activiesContainer">
+        <h2>Past Activity</h2>
+        <div className="activity">
+          <p>Monday 21st August</p>
+          <p className="stat">
+            20km
+          </p>
+        </div>
+
+        <div className="activity">
+          <p>Sunday 20st August</p>
+          <p className="stat">
+            20km
+          </p>
+        </div>
+
+        <div className="activity">
+          <p>Saturday 19st August</p>
+          <p className="stat">
+            20km
+          </p>
+        </div>
+
+        <button id="seeMore">See More</button>
+      </div>
+
+
+
+
+
+
+
+
       {/* <h1 id="welcome">Welcome {state.username}</h1> */}
 
-      <div id="userInfoContainer">
+      {/* <div id="userInfoContainer">
         <div id="userInfo">
           <ion-icon name="person-outline"></ion-icon>
           <h1>
@@ -92,8 +158,8 @@ function HomePage(props) {
         <div className="grid-item">6</div>
         <div className="grid-item">7</div>
         <div className="grid-item">8</div>
-      </div>
-    </div>
+      </div> */}
+    </div> 
   );
 }
 

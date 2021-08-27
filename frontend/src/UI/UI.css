@@ -1,6 +1,5 @@
 #sidebar {
   width: var(--sidebar-width);
-  /* height: 100vh; */
   background-color: rgb(25, 34, 61);
   position: fixed;
   top: 20px;
@@ -11,19 +10,17 @@
   padding-left: 20px;
   overflow: hidden;
   transition: width 0.2s;
+  z-index: 100;
 }
 
 .sidebarExtended {
   --sidebar-width: 240px;
+  box-shadow: var(--box-shadow);
 }
 
 .sidebarClosed {
   --sidebar-width: 80px;
 }
-
-/* #sidebar:hover {
-  --sidebar-width: 230px;
-} */
 
 #sidebar a {
   color: white;
@@ -103,9 +100,25 @@
 
 #content {
   position: absolute;
-  left: calc(40px + var(--sidebar-width));
+  left: calc(40px + 80px);
   top: 0px;
   right: 0px;
   bottom: 0px;
   transition: left 0.2s;
+}
+
+#logout {
+  background-color: rgb(233, 58, 58);
+  color: white;
+  height: 40px;
+  border-radius: 15px;
+  font-size: 16px;
+  border: none;
+  margin-top: 20px;
+  cursor: pointer;
+  width: calc(100% - 20px);
+  overflow: hidden;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }

@@ -2,6 +2,8 @@ import "./UI.css";
 import { Link, Element } from "react-scroll";
 import React, {useState} from "react";
 
+import Logout from "../Logout/Logout";
+
 function UI(props) {
   const [sidebarExtended, setSidebar] = useState(false);
 
@@ -30,6 +32,7 @@ function UI(props) {
             );
           })}
         </nav>
+        <Logout />
       </div>
 
       <div id="content">

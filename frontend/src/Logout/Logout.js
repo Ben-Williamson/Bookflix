@@ -2,10 +2,6 @@ import React from "react";
 import { appState } from '../store';
 
 class Logout extends React.Component {
-    constructor() {
-        super();
-    }
-
     logout() {
 
         fetch('http://192.168.0.5:3000/logout', {
@@ -22,7 +18,7 @@ class Logout extends React.Component {
 
     render() {
         return (
-            <button onClick={this.logout} > Logout</button>
+            <button id="logout" onClick={this.logout} > Logout</button>
         )
     }
 

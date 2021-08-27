@@ -1,60 +1,62 @@
 #loginPage {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 #loginPage .leaflet-container {
-    z-index: -1;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
 }
 
 #loginPage .leaflet-control-container {
-    display: none;
+  display: none;
 }
 
 #loginPage form {
-    z-index: 1;
-    position: fixed;
-    top: 50vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
-    color: var(--background-color);
-    border-radius: 20px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    background-color: white;
-    padding: 20px;
-    text-align: center;
+  z-index: 1;
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  color: var(--background-color);
+  border-radius: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: white;
+  padding: 20px;
+  text-align: center;
 }
 
 #loginPage form h1 {
-    font-size: 40px;
-    margin-top: 0;
+  font-size: 40px;
+  margin-top: 0;
 }
 
 #loginPage form input {
-    border-radius: 15px;
-    border-style: solid;
-    width: 80%;
-    font-size: 20px;
-    padding: 10px;
-    background-color: #eee;
-    border-color: #eee;
-    color: #222;
+  border-radius: 15px;
+  border-style: solid;
+  width: 80%;
+  font-size: 20px;
+  padding: 10px;
+  background-color: #eee;
+  border-color: #eee;
+  color: #222;
 }
 
 #loginPage form input:nth-of-type(1) {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 #loginPage form input:focus {
-    background-color: white;
-    outline: none;
+  background-color: white;
+  outline: none;
 }
 
-#loginPage form input[type=submit] {
-    background-color: var(--background-color);
-    color: white;
-    border: none;
+#loginPage form input[type="submit"] {
+  background-color: var(--background-color);
+  color: white;
+  border: none;
 }
