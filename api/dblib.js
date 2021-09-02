@@ -4,13 +4,14 @@ const bcrypt = require("bcrypt");
 class Database {
   constructor() {
     this.con = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "Gjba1976",
+      host: "mysql1",
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
       database: "HamsterTracker",
     });
     this.con.connect(function (err) {
       if (err) throw err;
+      // console.log("Database connection failed.");
     });
   }
   addUser(username, password, email, forename, surname) {
@@ -19,6 +20,7 @@ class Database {
         var sql = `INSERT INTO users (username, password, email, forename, surname) VALUES ('${username}', '${hash}', '${email}', '${forename}', '${surname}')`;
         this.con.query(sql, function (err, result) {
           if (err) resolve(err.code);
+          // if (err) throw err;
           else resolve(true);
         });
       });

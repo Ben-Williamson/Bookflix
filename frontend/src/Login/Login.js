@@ -16,7 +16,7 @@ class Login extends React.Component {
     var username = event.target[0].value;
     var password = event.target[1].value;
 
-    fetch("http://192.168.0.5:3000/auth", {
+    fetch("https://api.benwilliamson.org/auth", {
       method: "post",
       credentials: "include",
       headers: {

@@ -100,7 +100,7 @@
 
 #content {
   position: absolute;
-  left: calc(40px + 80px);
+  left: calc(var(--sidebar-width) + 40px);
   top: 0px;
   right: 0px;
   bottom: 0px;

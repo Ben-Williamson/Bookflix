@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const session = require("express-session");
 const express = require("express");
 const dblib = require("./dblib");
@@ -7,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://192.168.0.5:3001",
+    origin: "http://192.168.0.5:3000",
     credentials: true,
   })
 );
@@ -46,7 +48,8 @@ app.post("/auth", async function (req, res) {
     );
   }
 
-  console.log(req.body);
+  console.log(`${req.body.username} requesting login.`);
+  console.log(response.success ? "\x1b[32m" : '\x1b[31m', `↳ ${response.success ? "success" : "failed"}`);
 
   req.session.loggedin = response.success;
   req.session.username = req.body.username;
@@ -68,7 +71,7 @@ app.get("/", function (req, res) {
   if (req.session.loggedin) {
     res.send("hi " + req.session.username);
   } else {
-    res.send({ error: "Log in first" });
+    res.send({ error: "You must log in first." });
   }
 });
 
