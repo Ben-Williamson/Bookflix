@@ -48,7 +48,7 @@ app.post("/auth", async function (req, res) {
     if(dbQuery.success) {
       console.log(req.body.username, "logged in.");
       req.session.loggedin = true;
-      req.session.username = req.body.username;
+      req.session.userData = dbQuery.userData;
     }
   }
   if(req.body.type == "signup") {
@@ -60,7 +60,7 @@ app.post("/auth", async function (req, res) {
       if(dbQuery.success) {
         console.log(req.body.username, "logged in.");
         req.session.loggedin = true;
-        req.session.username = req.body.username;
+        req.session.userData = dbQuery.userData;
       }
     }
   }
@@ -79,9 +79,9 @@ app.post("/tick", function (req, res) {
 
 app.get("/", function (req, res) {
   if (req.session.loggedin) {
-    res.send("hi " + req.session.username);
+    res.send(req.session.userData);
   } else {
-    res.send({ error: "You must log in first." });
+    res.status(401).send("Unauthorized");
   }
 });
 
@@ -89,7 +89,7 @@ app.get("/data", function (req, res) {
   if (req.session.loggedin) {
     res.send({ data: req.session.username });
   } else {
-    res.send({ data: "no" });
+    res.status(401).send("Unauthorized");
   }
 });
 
