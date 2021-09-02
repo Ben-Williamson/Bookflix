@@ -7,14 +7,25 @@ import cities from "../data/cities";
 class Login extends React.Component {
   constructor() {
     super();
-    this.state = { error: null };
+    this.state = { error: null, mode: "login" };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.switchMode = this.switchMode.bind(this);
+  }
+
+  switchMode() {
+    this.setState({ mode: this.state.mode == "login" ? "signup" : "login" });
+    console.log(this.state);
   }
 
   handleSubmit(event) {
-    var username = event.target[0].value;
-    var password = event.target[1].value;
+    event.preventDefault();
+
+    var data = {type: this.state.mode};
+
+    for(var i = 0; i < event.target.length; i++) {
+      data[event.target.elements[i].name] = event.target.elements[i].value;
+    }
 
     fetch("https://api.benwilliamson.org/auth", {
       method: "post",
@@ -23,21 +34,20 @@ class Login extends React.Component {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username: username, password: password }),
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         if (res.success) {
           appState.setState({
             loggedIn: true,
-            userDetails: res,
+            userDetails: res.userData,
           });
         } else {
-          this.setState({ error: "Wrong username or password." });
+          this.setState({ error: res.message });
         }
       });
-
-    event.preventDefault();
   }
 
   render() {
@@ -51,22 +61,55 @@ class Login extends React.Component {
             url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
           />
         </MapContainer>
-        <form onSubmit={this.handleSubmit}>
-          <h1>Login</h1>
-          <p>
-            Don't have an account? <a href="google.com">Sign Up.</a>
-          </p>
 
-          <input type="text" placeholder="Username"></input>
+        { this.state.mode == "login" &&
+          <form onSubmit={this.handleSubmit}>
+            <h1>Login</h1>
+            <p>
+              Don't have an account? <a onClick={this.switchMode}>Sign Up.</a>
+            </p>
 
-          <br />
+            <input name="username" type="text" placeholder="Username"></input>
 
-          <input type="password" placeholder="Password"></input>
+            <br />
 
-          <p>{this.state.error}</p>
+            <input name="password" type="password" placeholder="Password"></input>
 
-          <input type="submit" value="Login" />
-        </form>
+            <p>{this.state.error}</p>
+
+            <input type="submit" value="Login" />
+          </form>
+        }
+        { this.state.mode == "signup" &&
+          <form onSubmit={this.handleSubmit}>
+            <h1>Sign up</h1>
+            <p>
+              Already have an account? <a onClick={this.switchMode}>Log in.</a>
+            </p>
+
+            <input name="email" type="text" placeholder="Email"></input>
+
+            <br />
+
+            <input name="firstname" type="text" placeholder="Firstname"></input>
+
+            <br />
+
+            <input name="surname" type="text" placeholder="Surname"></input>
+
+            <br />
+
+            <input name="username" type="text" placeholder="Username"></input>
+
+            <br />
+
+            <input name="password" type="password" placeholder="Password"></input>
+
+            <p>{this.state.error}</p>
+
+            <input type="submit" value="Sign up" />
+          </form>
+        }
       </div>
     );
   }

@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://192.168.0.5:3000",
+    origin: "https://hamster.benwilliamson.org",
     credentials: true,
   })
 );
@@ -41,20 +41,30 @@ app.use(
 );
 
 app.post("/auth", async function (req, res) {
-  if (req.body.username && req.body.password) {
-    var response = await db.comparePassword(
-      req.body.username,
-      req.body.password
-    );
+
+  if (req.body.type == "login" && req.body.username && req.body.password) {
+    var dbQuery = await db.comparePassword(req.body);
+
+    if(dbQuery.success) {
+      console.log(req.body.username, "logged in.");
+      req.session.loggedin = true;
+      req.session.username = req.body.username;
+    }
   }
+  if(req.body.type == "signup") {
+    var dbQuery = await db.addUser(req.body);
 
-  console.log(`${req.body.username} requesting login.`);
-  console.log(response.success ? "\x1b[32m" : '\x1b[31m', `↳ ${response.success ? "success" : "failed"}`);
+    if(dbQuery.success) {
+      var dbQuery = await db.comparePassword(req.body);
 
-  req.session.loggedin = response.success;
-  req.session.username = req.body.username;
-
-  res.send(response);
+      if(dbQuery.success) {
+        console.log(req.body.username, "logged in.");
+        req.session.loggedin = true;
+        req.session.username = req.body.username;
+      }
+    }
+  }
+  res.send(dbQuery);
 });
 
 app.post("/logout", function (req, res) {

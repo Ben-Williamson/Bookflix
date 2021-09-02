@@ -28,6 +28,12 @@
   background-color: white;
   padding: 20px;
   text-align: center;
+  min-width: 300px;
+}
+
+#loginPage form a {
+  color: var(--pink);
+  cursor: pointer;
 }
 
 #loginPage form h1 {
@@ -46,8 +52,12 @@
   color: #222;
 }
 
-#loginPage form input:nth-of-type(1) {
+#loginPage form input {
   margin-bottom: 20px;
+}
+
+#loginPage form input[type=password] {
+  margin-bottom: 0;
 }
 
 #loginPage form input:focus {
