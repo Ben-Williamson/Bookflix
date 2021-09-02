@@ -9,7 +9,7 @@ function randomIntFromInterval(min, max) {
 
 function MapPage() {
   const [points, setPoints] = useState([]);
-  const [zoom, setZoom] = useState(13);
+  const [zoom, setZoom] = useState(5);
 
   return (
     <div id="mapPage">
@@ -33,7 +33,7 @@ function MapPage() {
         <button
           onClick={function () {
             fetch(
-              "https://routing.openstreetmap.de/routed-bike/route/v1/driving/-0.1276474,51.5073219;-0.5080084385366577,52.808862649999995?overview=full&geometries=geojson"
+              "https://routing.openstreetmap.de/routed-bike/route/v1/driving/-0.1276474,51.5073219;37.6173,55.7558?overview=full&geometries=geojson"
             )
               .then((data) => data.json())
               .then((result) => {
@@ -50,6 +50,8 @@ function MapPage() {
         >
           Load path
         </button>
+
+        this should be scaled to hamster step length
       </div>
     </div>
   );

@@ -13,6 +13,19 @@
   z-index: 0;
 }
 
+#mapPage .leaflet-container path {
+  stroke-dasharray: 1000px;
+  stroke-dashoffset: 1000px;
+
+  animation: loadLine 1s forwards linear;
+}
+
+@keyframes loadLine {
+  to {
+    stroke-dasharray: 0;
+  }
+}
+
 #mapPage #details {
   flex-grow: 1;
   margin: 20px;
