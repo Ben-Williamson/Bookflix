@@ -13,7 +13,7 @@ clear()
 
 accessPoint = network.WLAN(network.AP_IF)
 accessPoint.active(True)
-accessPoint.config(essid="Hamster Tracker")
+accessPoint.config(essid="Hamster Tracker", password='12345678')
 
 client = network.WLAN(network.STA_IF)
 client.active(True)
@@ -27,6 +27,8 @@ with open("storedCreds.json", "r") as f:
 client.connect(data["ssid"], data["password"])
 
 startTime = time.time()
-while not client.isconnected() and time.time() - startTime < 10:
+print(data)
+
+while not client.isconnected() and time.time() - startTime < 20:
     print(".", end="")
     time.sleep(1)
