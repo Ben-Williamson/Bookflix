@@ -31,7 +31,7 @@
   min-width: 300px;
 }
 
-#loginPage form a {
+#loginPage form span {
   color: var(--pink);
   cursor: pointer;
 }

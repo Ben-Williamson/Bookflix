@@ -4,6 +4,7 @@ import Login from "./Login/Login";
 
 import HomePage from "./HomePage/HomePage";
 import MapPage from "./MapPage/MapPage";
+import LeaderboardPage from "./leaderboardPage/leaderboardPage";
 
 import UI from "./UI/UI";
 
@@ -22,13 +23,14 @@ function App() {
           <MapPage></MapPage>
         </div>
         <div icon="bar-chart-outline" name="leaderboard">
-          leaderboard
+          <LeaderboardPage></LeaderboardPage>
         </div>
       </UI>
     );
+  } else {
+    return <Login></Login>;
   }
-
-  return <Login></Login>;
+ 
 }
 
 export default App;

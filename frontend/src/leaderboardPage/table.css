@@ -1,0 +1,33 @@
+#leaderboardPage {
+    padding-left: 20px;
+}
+
+#leaderboard {
+    border-collapse: collapse;
+    margin: 25px 0;
+    min-width: 400px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+#leaderboard thead {
+    background-color: var(--background-color);
+    color: #ffffff;
+    text-align: left;
+}
+
+#leaderboard tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+#leaderboard th,
+#leaderboard td {
+    padding: 12px 15px;
+}
+
+
+#leaderboard tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}

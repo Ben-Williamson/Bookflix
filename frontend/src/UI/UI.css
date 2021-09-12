@@ -1,6 +1,6 @@
 #sidebar {
   width: var(--sidebar-width);
-  background-color: rgb(25, 34, 61);
+  background-color: var(--background-color);
   position: fixed;
   top: 20px;
   left: 20px;
@@ -55,7 +55,7 @@
   width: 100%;
   height: 100%;
   border-bottom-right-radius: 20px;
-  background: rgb(25, 34, 61);
+  background: var(--background-color);
 }
 
 #sidebar a b:nth-child(2) {
@@ -80,12 +80,12 @@
   width: 100%;
   height: 100%;
   border-top-right-radius: 20px;
-  background: rgb(25, 34, 61);
+  background: var(--background-color);
 }
 
 #sidebar .active {
   background-color: white;
-  color: rgb(25, 34, 61);
+  color: var(--background-color);
 }
 
 #sidebar a ion-icon {
