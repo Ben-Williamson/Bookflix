@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   hamster_db:
-    image: mysql:5.7
+    image: mariadb:10.5.8
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -13,10 +13,10 @@ services:
   phpmyadmin:
     depends_on:
       - hamster_db
-    image: phpmyadmin/phpmyadmin
+    image: arm64v8/phpmyadmin
     restart: always
     ports:
-      - '8080:80'
+      - '8082:80'
     environment:
       PMA_HOST: hamster_db
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -27,7 +27,17 @@ services:
       - ./api:/usr/src/app
       - ./.env:/usr/src/app/.env
     ports:
-      - "82:3000"
+      - "3001:3000"
+    depends_on:
+      - "hamster_db"
+
+  data_api:
+    build: ./dataAPI
+    volumes:
+      - ./dataAPI:/usr/src/app
+      - ./.env:/usr/src/app/.env
+    ports:
+      - "3002:3000"
     depends_on:
       - "hamster_db"
   
@@ -36,6 +46,6 @@ services:
     volumes:
       - ./frontend:/usr/src/app
     ports:
-      - "83:3000"
+      - "3000:3000"
     depends_on:
       - "login_api"

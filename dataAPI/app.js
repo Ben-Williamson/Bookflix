@@ -28,6 +28,10 @@ app.get("/data", function(req, res) {
   res.send(req.query);
 });
 
+app.get("/", function (req, res) {
+  res.send("online.");
+});
+
 app.listen(PORT, function () {
   console.log("App running on port " + PORT);
 });

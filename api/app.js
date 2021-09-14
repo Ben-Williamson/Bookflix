@@ -34,6 +34,8 @@ app.use(
     // back to the session store
     resave: true,
 
+    cookie: { maxAge: 8*60*60*1000 },
+
     // Forces a session that is "uninitialized"
     // to be saved to the store
     saveUninitialized: true,
@@ -41,6 +43,7 @@ app.use(
 );
 
 app.post("/auth", async function (req, res) {
+  console.log(req.body);
 
   if (req.body.type == "login" && req.body.username && req.body.password) {
     var dbQuery = await db.comparePassword(req.body);

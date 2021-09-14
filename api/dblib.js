@@ -23,6 +23,7 @@ class Database {
       if(data.username && data.password && data.firstname && data.surname && data.email) {
         bcrypt.hash(data.password, 10, (err, hash) => {
           var sql = `INSERT INTO users (username, password, email, forename, surname) VALUES ('${data.username}', '${hash}', '${data.email}', '${data.firstname}', '${data.surname}')`;
+
           this.con.query(sql, function (err, result) {
             response.success = true;
             response.message = "User created.";
@@ -47,7 +48,7 @@ class Database {
           response["message"] = "Unknown error.";
         }
 
-        if (result.length > 0) { // if there are results
+        if (result != null) { // if there are results
           bcrypt.compare(data.password, result[0].password, function (error, res) { // compare the password found in the database with that provided
             if (error) {
               //console.log("Passwords don't match"); // if incorrect password stop and tell someone
