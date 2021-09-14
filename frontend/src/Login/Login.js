@@ -19,6 +19,7 @@ class Login extends React.Component {
   }
 
   handleSubmit(event) {
+    console.log(event);
     event.preventDefault();
 
     var data = {type: this.state.mode};
