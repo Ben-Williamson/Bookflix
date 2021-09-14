@@ -14,7 +14,7 @@ class Login extends React.Component {
   }
 
   switchMode() {
-    this.setState({ mode: this.state.mode == "login" ? "signup" : "login" });
+    this.setState({ mode: this.state.mode === "login" ? "signup" : "login" });
     console.log(this.state);
   }
 
@@ -62,11 +62,11 @@ class Login extends React.Component {
           />
         </MapContainer>
 
-        { this.state.mode == "login" &&
+        { this.state.mode === "login" &&
           <form onSubmit={this.handleSubmit}>
             <h1>Login</h1>
             <p>
-              Don't have an account? <a onClick={this.switchMode}>Sign Up.</a>
+              Don't have an account? <span onClick={this.switchMode}>Sign Up.</span>
             </p>
 
             <input name="username" type="text" placeholder="Username"></input>
@@ -80,11 +80,11 @@ class Login extends React.Component {
             <input type="submit" value="Login" />
           </form>
         }
-        { this.state.mode == "signup" &&
+        { this.state.mode === "signup" &&
           <form onSubmit={this.handleSubmit}>
             <h1>Sign up</h1>
             <p>
-              Already have an account? <a onClick={this.switchMode}>Log in.</a>
+              Already have an account? <span onClick={this.switchMode}>Log in.</span>
             </p>
 
             <input name="email" type="text" placeholder="Email"></input>
