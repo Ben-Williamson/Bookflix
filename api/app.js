@@ -75,6 +75,7 @@ app.post("/logout", function (req, res) {
 
 app.post("/tick", function (req, res) {
   console.log(req.body.trackerID, req.body.time);
+  res.send("recived");
 });
 
 app.get("/", function (req, res) {

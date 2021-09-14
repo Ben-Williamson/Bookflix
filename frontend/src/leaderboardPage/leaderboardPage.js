@@ -1,9 +1,8 @@
 import "./table.css";
 
-function row(r) {
-    console.log("Hi")
+function row(r, key) {
     return (
-        <tr>
+        <tr key={key}>
             <td>{r.name}</td>
             <td>{r.rank}</td>
             <td>{r.owner}</td>
@@ -35,7 +34,7 @@ function leaderboardPage() {
                 <tbody>
                     
                     { rowData.map(function (r){
-                        return row(r);
+                        return row(r, rowData.indexOf(r));
                     }) }
                     
                 </tbody>
