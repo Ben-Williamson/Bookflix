@@ -7,9 +7,9 @@ import time
 class TickManager:
     def __init__(self):
         self.ticks = []
-        self.id = "this is a test"
+        self.id = "0000001"
         self.lastTrigger = time.time_ns()
-        self.bufferLength = 5
+        self.bufferLength = 50
         ntptime.settime()
 
     def addToQueue(self, data):
@@ -21,21 +21,23 @@ class TickManager:
 
     def postData(self):
         print("posting")
-        d = json.dumps(self.ticks)
-        # try:
-        urequests.post("https://api.benwilliamson.org/tick", headers={'content-type': 'application/json'}, data=d)
-        print("done")
-        # except:
-        #     print("failed")
+        d = {"hardwareID": self.id, "ticks": self.ticks}
+        headers = {"Accept": "application/json, text/plain, */*", 'Content-type': 'application/json'}
+        try:
+            urequests.post("http://data.benwilliamson.org", headers=headers, data=json.dumps(d))
+            self.ticks = []
+            print("done")
+        except:
+            print("failed")
 
     def tick(self, pin):
-        if time.time_ns() - self.lastTrigger > 200000000:   
-            self.addToQueue({"tickID": hash(time.time_ns()), "trackerID": self.id, "time": time.time_ns()})
+        if time.time_ns() - self.lastTrigger > 200000000:
+            self.addToQueue(ntptime.time())
             print(self.ticks)
             self.lastTrigger = time.time_ns()
 
     def syncTicks(self):
-        if time.time() % 10 == 0:
+        if time.time() % 10 == 0 and len(self.ticks) > 0:
             print(time.time(), "post now")
             self.postData()
             time.sleep(1)
