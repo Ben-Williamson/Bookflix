@@ -5,10 +5,10 @@ const bcrypt = require("bcrypt");
 class Database {
   constructor() {
     this.con = mysql.createConnection({
-      host: "mysql1",
+      host: "db",
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      database: "HamsterTracker",
+      database: "hamster",
     });
     this.con.connect(function (err) {
       if (err) throw err;
