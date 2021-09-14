@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  db:
+  hamster_db:
     image: mysql:5.7
     restart: always
     environment:
@@ -10,21 +10,32 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
 
+  phpmyadmin:
+    depends_on:
+      - hamster_db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: hamster_db
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+
   login_api:
     build: ./api
     volumes:
       - ./api:/usr/src/app
       - ./.env:/usr/src/app/.env
     ports:
-      - "81:3000"
+      - "82:3000"
     depends_on:
-      - "db"
-
+      - "hamster_db"
+  
   frontend:
     build: ./frontend
     volumes:
       - ./frontend:/usr/src/app
     ports:
-      - "80:3000"
+      - "83:3000"
     depends_on:
       - "login_api"
