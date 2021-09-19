@@ -18,9 +18,9 @@ class Database {
   
 
 
-  addTick(hardwareID, time) {
+  addTick(hardwareID, rotations, time) {
     return new Promise((resolve) => {
-      var sql = `INSERT INTO ticks (hardwareID, time) VALUES ('${hardwareID}', '${time}')`;
+      var sql = `INSERT INTO ticks (hardwareID, rotations, timestamp) VALUES ('${hardwareID}', '${rotations}', '${time}')`;
       console.log(sql);
           this.con.query(sql, function (err, result) {
             resolve();

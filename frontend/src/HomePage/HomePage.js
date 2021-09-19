@@ -59,7 +59,7 @@ function HomePage(props) {
 
 
 
-      <h1>Hi, {state.userDetails.forename}</h1>
+      <h1>Hi, {state.userData.forename}</h1>
 
 
       <div className="left">

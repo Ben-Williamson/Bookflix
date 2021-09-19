@@ -47,8 +47,7 @@ class Database {
           console.log("DB lookup failed"); // if lookup error tell someone and don't continue
           response["message"] = "Unknown error.";
         }
-
-        if (result != null) { // if there are results
+        if (result.length != 0) { // if there are results
           bcrypt.compare(data.password, result[0].password, function (error, res) { // compare the password found in the database with that provided
             if (error) {
               //console.log("Passwords don't match"); // if incorrect password stop and tell someone

@@ -10,7 +10,8 @@ const app = express();
 app.use(
   cors({
     origin: "https://hamster.benwilliamson.org",
-    credentials: true,
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    credentials: true
   })
 );
 
@@ -67,12 +68,13 @@ app.post("/auth", async function (req, res) {
       }
     }
   }
-  res.send(dbQuery);
+
+  res.send(req.session);
 });
 
 app.post("/logout", function (req, res) {
   req.session.destroy((err) => {
-    res.send("session destroyed");
+    res.send(req.session);
   });
 });
 
@@ -83,9 +85,9 @@ app.post("/tick", function (req, res) {
 
 app.get("/", function (req, res) {
   if (req.session.loggedin) {
-    res.send(req.session.userData);
+    res.send(req.session);
   } else {
-    res.status(401).send("Unauthorized");
+    res.status(401).send({loggedin: false});
   }
 });
 
