@@ -13,15 +13,13 @@ function Login() {
     e.preventDefault();
     console.log(e);
 
-    var data = {type: mode};
+    var data = {};
 
     for(var i = 0; i < e.target.length-1; i++) {
       data[e.target.elements[i].name] = e.target.elements[i].value;
     }
 
-    console.log(data);
-
-    fetch("https://api.benwilliamson.org/auth", {
+    fetch("https://api.benwilliamson.org/" + mode, {
       method: "post",
       credentials: "include",
       headers: {
@@ -32,11 +30,10 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         if (res.loggedin) {
           appState.setState(res);
         } else {
-          setError("Failed.");
+          setError(res.error);
         }
       });
   }
