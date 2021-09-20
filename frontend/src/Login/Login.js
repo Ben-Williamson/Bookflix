@@ -1,34 +1,25 @@
-import React from "react";
+import React, { useState } from 'react';
 import { appState } from "../store";
 import "./login.css";
 import { MapContainer, TileLayer } from "react-leaflet";
 import cities from "../data/cities";
 
-class Login extends React.Component {
-  constructor() {
-    super();
-    this.state = { error: null, mode: "login" };
+function Login() {
+  const [mode, setMode] = useState("login");
+  const [error, setError] = useState("");
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.switchMode = this.switchMode.bind(this);
-  }
 
-  switchMode() {
-    this.setState({ mode: this.state.mode === "login" ? "signup" : "login" });
-    console.log(this.state);
-  }
+  var handleSubmit = function (e) {
+    e.preventDefault();
+    console.log(e);
 
-  handleSubmit(event) {
-    console.log(event);
-    event.preventDefault();
+    var data = {};
 
-    var data = {type: this.state.mode};
-
-    for(var i = 0; i < event.target.length; i++) {
-      data[event.target.elements[i].name] = event.target.elements[i].value;
+    for(var i = 0; i < e.target.length-1; i++) {
+      data[e.target.elements[i].name] = e.target.elements[i].value;
     }
 
-    fetch("https://api.benwilliamson.org/auth", {
+    fetch("https://api.benwilliamson.org/" + mode, {
       method: "post",
       credentials: "include",
       headers: {
@@ -39,20 +30,15 @@ class Login extends React.Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        if (res.success) {
-          appState.setState({
-            loggedIn: true,
-            userDetails: res.userData,
-          });
+        if (res.loggedin) {
+          appState.setState(res);
         } else {
-          this.setState({ error: res.message });
+          setError(res.error);
         }
       });
   }
 
-  render() {
-    var city = cities[Math.floor(Math.random() * cities.length)];
+  var city = cities[Math.floor(Math.random() * cities.length)];
 
     return (
       <div id="loginPage">
@@ -63,11 +49,11 @@ class Login extends React.Component {
           />
         </MapContainer>
 
-        { this.state.mode === "login" &&
-          <form onSubmit={this.handleSubmit}>
+        { mode === "login" &&
+          <form onSubmit={handleSubmit}>
             <h1>Login</h1>
             <p>
-              Don't have an account? <span onClick={this.switchMode}>Sign Up.</span>
+              Don't have an account? <span onClick={function() {setMode("signup")}}>Sign Up.</span>
             </p>
 
             <input name="username" type="text" placeholder="Username"></input>
@@ -76,16 +62,16 @@ class Login extends React.Component {
 
             <input name="password" type="password" placeholder="Password"></input>
 
-            <p>{this.state.error}</p>
+            <p>{error}</p>
 
             <input type="submit" value="Login" />
           </form>
         }
-        { this.state.mode === "signup" &&
-          <form onSubmit={this.handleSubmit}>
+        { mode === "signup" &&
+          <form onSubmit={handleSubmit}>
             <h1>Sign up</h1>
             <p>
-              Already have an account? <span onClick={this.switchMode}>Log in.</span>
+              Already have an account? <span onClick={function() {setMode("login")}}>Log in.</span>
             </p>
 
             <input name="email" type="text" placeholder="Email"></input>
@@ -106,14 +92,13 @@ class Login extends React.Component {
 
             <input name="password" type="password" placeholder="Password"></input>
 
-            <p>{this.state.error}</p>
+            <p>{error}</p>
 
             <input type="submit" value="Sign up" />
           </form>
         }
       </div>
     );
-  }
 }
 
 export default Login;

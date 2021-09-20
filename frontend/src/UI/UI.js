@@ -25,7 +25,7 @@ function UI(props) {
                 <b></b>
                 <b></b>
                   <ion-icon name={child.props.icon}></ion-icon>
-                  {child.props.name}
+                  <span>{child.props.name}</span>
                 
                 
               </Link>

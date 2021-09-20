@@ -6,6 +6,8 @@ import HomePage from "./HomePage/HomePage";
 import MapPage from "./MapPage/MapPage";
 import LeaderboardPage from "./leaderboardPage/leaderboardPage";
 
+import LoadingPage from "./LoadingPage/LoadingPage";
+
 import UI from "./UI/UI";
 
 import "./App.css";
@@ -13,7 +15,8 @@ import "./App.css";
 function App() {
   const state = useStore(appState);
 
-  if (state.loggedIn) {
+  console.log("state:", state);
+  if (state.loggedin) {
     return (
       <UI>
         <div icon="home-outline" name="home">
@@ -27,8 +30,10 @@ function App() {
         </div>
       </UI>
     );
-  } else {
+  } else if(state.loggedin === false) {
     return <Login></Login>;
+  } else {
+    return <LoadingPage></LoadingPage>; //   loading
   }
  
 }

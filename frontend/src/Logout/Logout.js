@@ -9,10 +9,7 @@ class Logout extends React.Component {
             credentials: 'include'
         })
             .then(res => {
-                appState.setState({
-                    loggedIn: false,
-                    username: null
-                });
+                appState.setState({loggedin: false});
             });
     }
 

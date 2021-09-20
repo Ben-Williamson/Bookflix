@@ -16,16 +16,17 @@ const PORT = 3000;
 app.post("/", function (req, res) {
   console.log(req.body);
 
-  for(tick in req.body.ticks) {
-    console.log(tick);
-    db.addTick(req.body.hardwareID, req.body.ticks[tick]);
-  }
+  db.addTick(req.body.hardwareID, req.body.rotations, req.body.time);
 
   res.send("received");
 });
 
 app.get("/data", function(req, res) {
   res.send(req.query);
+});
+
+app.get("/", function (req, res) {
+  res.send("online.");
 });
 
 app.listen(PORT, function () {
