@@ -24,6 +24,7 @@ def connect(args):
 
 
 def status(args={}):
+    print(client.isconnected())
     return json.dumps({"connected": client.isconnected()})
 
 
@@ -32,6 +33,8 @@ def saveCreds(args):
         f.write(json.dumps(args))
         f.close()
 
+def hardwareID(args):
+    return "100101"
 
 def closeServer(args={}):
     global runServer
@@ -43,6 +46,7 @@ server.addCustomEndpoint("/scan", scan)
 server.addCustomEndpoint("/connect", connect)
 server.addCustomEndpoint("/connectionStatus", status)
 server.addCustomEndpoint("/saveCreds", saveCreds)
+server.addCustomEndpoint("/hardwareID", hardwareID)
 server.addCustomEndpoint("/closeServer", closeServer)
 
 print(status())
@@ -50,36 +54,18 @@ print(status())
 runServer = not client.isconnected()
 startTime = 0
 
+print("starting server")
 while runServer:
     server.serve()
     print("server running")
-
+print("Closed server")
 
 accessPoint.active(False)
-
-# lastTrigger = time.time_ns()
-#
-#
-# def sendTick(pin):
-#     global lastTrigger
-#
-#     if time.time_ns() - lastTrigger > 200000000:
-#
-#         try:
-#             print("sending requset")
-#             d = json.dumps({"trackerID": "hi", "time": time.time()})
-#
-#             urequests.post("http://benwilliamson.org:3000/tick", headers={'content-type': 'application/json'},
-#                            data=d)
-#             print("tick recived")
-#         except:
-#             print("send failed")
-#         lastTrigger = time.time_ns()
 
 tm = TickManager()
 
 p = Pin(2, Pin.IN, Pin.PULL_UP)
-p.irq(tm.tick, trigger=Pin.IRQ_RISING)
+p.irq(tm.rotate, trigger=Pin.IRQ_RISING)
 
 while True:
     tm.syncTicks()

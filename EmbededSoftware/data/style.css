@@ -93,6 +93,20 @@ input {
   border-color: #64b3f4 transparent #64b3f4 transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
+#success {
+  text-align: center;
+}
+
+#success #qrcode {
+  display: inline-block;
+  margin: 2rem;
+}
+
+#success h4 {
+  font-size: 2rem;
+}
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);

@@ -6,38 +6,27 @@ import time
 
 class TickManager:
     def __init__(self):
-        self.ticks = []
         self.id = "0000001"
-        self.lastTrigger = time.time_ns()
-        self.bufferLength = 50
+        self.rotations = 0
+        self.lastTrigger = time.time()
         ntptime.settime()
-
-    def addToQueue(self, data):
-        if len(self.ticks) < self.bufferLength:
-            self.ticks.append(data)
-        else:
-            self.ticks.append(data)
-            self.ticks = self.ticks[-self.bufferLength:]
 
     def postData(self):
         print("posting")
-        d = {"hardwareID": self.id, "ticks": self.ticks}
+        d = {"hardwareID": self.id, "rotations": self.rotations, "time": time.time()}
         headers = {"Accept": "application/json, text/plain, */*", 'Content-type': 'application/json'}
         try:
             urequests.post("http://data.benwilliamson.org", headers=headers, data=json.dumps(d))
-            self.ticks = []
-            print("done")
+            self.rotations = 0
         except:
             print("failed")
 
-    def tick(self, pin):
-        if time.time_ns() - self.lastTrigger > 200000000:
-            self.addToQueue(ntptime.time())
-            print(self.ticks)
-            self.lastTrigger = time.time_ns()
+    def rotate(self, pin):
+        if time.time() != self.lastTrigger:
+            self.rotations += 1
+            self.lastTrigger = time.time()
 
     def syncTicks(self):
-        if time.time() % 10 == 0 and len(self.ticks) > 0:
-            print(time.time(), "post now")
+        if time.time() % 60 == 0 and self.rotations != 0:
             self.postData()
             time.sleep(1)
