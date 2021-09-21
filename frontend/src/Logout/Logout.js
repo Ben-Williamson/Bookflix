@@ -4,7 +4,7 @@ import { appState } from '../store';
 class Logout extends React.Component {
     logout() {
 
-        fetch('https://api.benwilliamson.org/logout', {
+        fetch('https://api.mybookflix.co.uk/logout', {
             method: 'post',
             credentials: 'include'
         })

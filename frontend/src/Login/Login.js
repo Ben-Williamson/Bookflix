@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { appState } from "../store";
 import "./login.css";
-import { MapContainer, TileLayer } from "react-leaflet";
-import cities from "../data/cities";
 
 function Login() {
   const [mode, setMode] = useState("login");
@@ -19,7 +17,7 @@ function Login() {
       data[e.target.elements[i].name] = e.target.elements[i].value;
     }
 
-    fetch("https://api.benwilliamson.org/" + mode, {
+    fetch("https://api.mybookflix.co.uk/" + mode, {
       method: "post",
       credentials: "include",
       headers: {
@@ -38,16 +36,8 @@ function Login() {
       });
   }
 
-  var city = cities[Math.floor(Math.random() * cities.length)];
-
     return (
       <div id="loginPage">
-        <MapContainer center={{ lat: city.lat, lng: city.lng }} zoom={13}>
-          <TileLayer
-            attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-            url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-          />
-        </MapContainer>
 
         { mode === "login" &&
           <form onSubmit={handleSubmit}>
