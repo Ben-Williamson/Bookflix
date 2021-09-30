@@ -3,13 +3,18 @@ module.exports = function(sequelize, DataTypes){
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
+      allowNull: false
     },
     writtenBy: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      notEmpty: true,
+      allowNull: false
     },
     bookId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING,
+      notEmpty: true,
+      allowNull: false
     },
     title: {
       type: DataTypes.STRING,
@@ -28,9 +33,9 @@ module.exports = function(sequelize, DataTypes){
     stars: {
         type: DataTypes.INTEGER,
         
-        validate: {
-            notEmpty: {msg: "How many stars?"}
-        }
+        // validate: {
+        //     notEmpty: {msg: "How many stars?"}
+        // }
     }
   }, 
   {

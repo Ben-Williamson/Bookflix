@@ -13,7 +13,7 @@ services:
   phpmyadmin:
     depends_on:
       - bookflix_db
-    image: arm64v8/phpmyadmin
+    image: phpmyadmin/phpmyadmin
     restart: always
     ports:
       - '9082:80'
@@ -25,7 +25,6 @@ services:
     build: ./api
     volumes:
       - ./api:/usr/src/app
-      - ./.env:/usr/src/app/.env
     ports:
       - "4001:3000"
     depends_on:

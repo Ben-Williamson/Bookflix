@@ -102,10 +102,27 @@ app.post("/logout", function (req, res) {
   });
 });
 
+app.post("/review", async function (req, res) {
+  try {
+    var response = await Review.create(req.body);
+    response.success = true;
+  }
+  catch(error) {
+    req.session.error = error.errors[0].message;
+  }
+  res.send(req.session);
+})
+
+app.get("/reviews", async function (req, res) {
+  const reviews = await Review.findAll();
+
+  res.send(reviews);
+})
+
 async function run() {
   await sequelize.authenticate();
-  await User.sync({force: true});
-  await Review.sync({force: true})
+  await User.sync();
+  await Review.sync();
 }
 
 run()

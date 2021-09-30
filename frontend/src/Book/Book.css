@@ -1,0 +1,30 @@
+.book {
+    padding: 10px;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+    min-width: 100px;
+    transition: transform 0.3s;
+    height: calc(10vh + 9rem);
+}
+
+.book p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.book img {
+    height: 10vh; 
+    min-height: 130px;
+} 
+
+.book:hover {
+    transform: scale(110%);
+}
+
+/* .book p {
+    float: left;
+}  */

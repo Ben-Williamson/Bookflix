@@ -1,9 +1,10 @@
 import { useStore } from "react-stores";
 import { appState } from "./store";
 import Login from "./Login/Login";
-import Logout from "./Logout/Logout";
-
-
+import Topbar from "./Topbar/Topbar";
+import Homepage from "./Homepage/Homepage"
+import ReadReviews from "./ReadReviews/ReadReviews";
+import WriteReviews from "./WriteReviews/WriteReviews";
 import LoadingPage from "./LoadingPage/LoadingPage";
 
 import "./App.css";
@@ -14,9 +15,12 @@ function App() {
   console.log("state:", state);
   if (state.loggedin) {
     return (
+      
       <div>
-        <h1>Welcome</h1>
-        <Logout></Logout>
+        <Topbar></Topbar>
+        { state.reviewMode==="none" && <Homepage></Homepage>}
+        { state.reviewMode==="read" && <ReadReviews></ReadReviews>}
+        { state.reviewMode==="write" && <WriteReviews></WriteReviews>}
       </div>
       
 

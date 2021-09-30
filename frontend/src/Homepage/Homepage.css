@@ -1,0 +1,95 @@
+#Homepage {
+    position: absolute;
+    top: var(--topbar-height);
+    color: black;
+}
+
+#hero {
+    width: 100vw;
+    height: 60vh;
+    position: relative;
+}
+
+#hero .bg {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+#hero .gradient {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent, black);
+    position: absolute;
+    top: 0;
+}
+
+#hero .content {
+    position: absolute;
+    top: 0;
+    color: #eee;
+    overflow: hidden;
+    /* display: grid; */
+    width: 100%;
+    height: 100%;
+    grid-template-columns: auto auto;
+}
+
+#hero .content .left {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5vw;
+}
+
+#hero .content .left h1 {
+    font-size: 4rem;
+    margin: 0;
+}
+#hero .content .left h2 {
+    margin-top: 0;
+}
+
+#hero .content .left p {
+    width: 350px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+#hero .content .left span {
+    background-color: var(--red);
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+#hero .content .left span:hover {
+    background-color: rgb(185, 0, 0);
+}
+
+#hero .content img {
+    height: 40vh;
+    position: absolute;
+    right: 10vw;
+    top: 10vh;
+}
+
+.scrollContainer {
+    width: 100vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#results {
+    display: grid;
+    grid-template-columns: repeat(30, auto);
+    
+}
+
+h3 {
+    color: white;
+    padding-left: 20px;
+}

@@ -1,0 +1,79 @@
+
+#ReadReviews {
+    position:absolute;
+    top: var(--topbar-height);
+    /* padding-top: 30px; */
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#ReadReviews h1 {
+    margin-top: 0;
+}
+
+.close {
+    filter: invert(1);
+    width: 30px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#ReadReviews .review {
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+}
+
+#ReadReviews .title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#ReadReviews .author {
+    text-transform: uppercase;
+    margin-top:0;
+    padding-top:0;
+    color: #666;
+}
+
+#ReadReviews form{
+    font-family: "Poppins";
+}
+
+#ReadReviews * {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#ReadReviews form #title {
+    background-color: #666;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    width: 80%;
+}
+
+#ReadReviews form #submit {
+    background-color: #666;
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+#ReadReviews form textarea {
+    background-color: #666;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    width: 80%;
+    height: 300px;
+    font-family: "Poppins";
+}

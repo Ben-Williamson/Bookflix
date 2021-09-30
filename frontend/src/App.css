@@ -9,8 +9,12 @@ body {
   --pink: #f72585;
   --blue: #4361ee;
   --yellow: #f2a541;
+  --red: #DB202C;
   --box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   overflow-x: hidden;
+  --topbar-height: max(6vh, 60px);
+  color: white;
+  background-color: black;
 }
 
 .page {
