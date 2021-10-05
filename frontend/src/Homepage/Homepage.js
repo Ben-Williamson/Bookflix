@@ -9,8 +9,11 @@ import "./Homepage.css";
 
 function Homepage() {
     const state = useStore(appState);
+    
     return (
         <div id="Homepage">
+
+          { state.bookSelected.isbn !== undefined &&
           <div id="hero">
             <div className="bg" style={{backgroundImage: `url(${snap})`}}></div>
             <div className="gradient"></div>
@@ -28,6 +31,7 @@ function Homepage() {
               <img src={"https://covers.openlibrary.org/b/id/" + state.bookSelected.cover_i + "-L.jpg"}/>
             </div>
           </div>
+          }
 
           <h3>Search results:</h3>
           <div className="scrollContainer">
@@ -37,7 +41,7 @@ function Homepage() {
             })}
           </div>
           </div>
-          
+
         </div>
     )
 }

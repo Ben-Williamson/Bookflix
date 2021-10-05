@@ -20,4 +20,4 @@ RUN npm install
 RUN npm install -g nodemon
 
 EXPOSE 3000
-CMD [ "nodemon", "app.js" ]
+CMD [ "nodemon", "--ignore", "cache/", "app.js" ]

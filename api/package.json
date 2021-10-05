@@ -17,6 +17,7 @@
     "express-session": "^1.17.2",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.0",
+    "persistent-cache": "^1.1.1",
     "sequelize": "^6.6.5"
   }
 }

@@ -7,6 +7,16 @@ const cors = require("cors");
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 
+const fetch = require("node-fetch");
+
+if (!globalThis.fetch) {
+	globalThis.fetch = fetch;
+}
+
+var cache = require('persistent-cache');
+
+var searches = cache();
+
 
 const sequelize = new Sequelize('Bookflix', process.env.DB_USER, process.env.DB_PASSWORD, {
   host: 'bookflix_db',
@@ -14,7 +24,7 @@ const sequelize = new Sequelize('Bookflix', process.env.DB_USER, process.env.DB_
 });
 
 var User = require("./models/User")(sequelize, DataTypes);
-var Review = require("./models/Review")(sequelize, DataTypes);  
+var Review = require("./models/Review")(sequelize, DataTypes);
 
 const app = express();
 
@@ -68,7 +78,7 @@ app.post("/login", async function (req, res) {
       where: {
         username: req.body.username
       }
-    });   
+    });
     console.log("response", response);
     if(response && await response.validPassword(req.body.password)) {
       console.log(req.body.username, "logged in.");
@@ -86,7 +96,7 @@ app.post("/login", async function (req, res) {
 app.post("/signup", async function (req, res) {
   try {
         var response = await User.create(req.body);
-    
+
         req.session.loggedin = true;
         req.session.userData = response.dataValues;
       }
@@ -114,9 +124,53 @@ app.post("/review", async function (req, res) {
 })
 
 app.get("/reviews", async function (req, res) {
-  const reviews = await Review.findAll();
 
+  let reviews = [];
+
+  if(req.query.bookId) {
+    reviews = await Review.findAll({
+      where: {
+        bookId: req.query.bookId
+      }
+    });
+  }
   res.send(reviews);
+})
+
+app.get("/reviewedBooks", async function (req, res) {
+  var bookIDs = new Set();
+  var books = [];
+
+  var reviews = await Review.findAll({
+    attributes: ['bookId']
+  });
+
+  reviews.forEach(element => {
+    bookIDs.add(element.bookId);
+  });
+
+  res.send(books);
+});
+
+app.get("/search", async function (req, res) {
+
+  var cacheValue = searches.getSync(req.query.q);
+
+  // If the search term was found in the cache, send the cached data.
+  if(cacheValue != undefined) {
+    console.log("Sent cached value.");
+    res.send(cacheValue);
+  }
+  // Otherwize, make the request.
+  else {
+    var results = await fetch("http://openlibrary.org/search.json?q="+req.query.q);
+    var results = await results.json();
+
+    console.log("Added to cache");
+    searches.putSync(req.query.q, results);
+
+    res.send(results);
+  }
 })
 
 async function run() {

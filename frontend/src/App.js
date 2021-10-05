@@ -15,14 +15,14 @@ function App() {
   console.log("state:", state);
   if (state.loggedin) {
     return (
-      
+
       <div>
         <Topbar></Topbar>
         { state.reviewMode==="none" && <Homepage></Homepage>}
         { state.reviewMode==="read" && <ReadReviews></ReadReviews>}
         { state.reviewMode==="write" && <WriteReviews></WriteReviews>}
       </div>
-      
+
 
     );
   } else if(state.loggedin === false) {
@@ -30,7 +30,7 @@ function App() {
   } else {
     return <LoadingPage></LoadingPage>; //   loading
   }
- 
+
 }
 
 export default App;

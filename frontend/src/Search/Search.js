@@ -10,13 +10,13 @@ class Search extends React.Component {
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
-  
-    handleChange(event) {    
+
+    handleChange(event) {
         this.setState({value: event.target.value});
     }
     handleSubmit(event) {
       event.preventDefault();
-      fetch("//openlibrary.org/search.json?q=" + this.state.value)
+      fetch("//api.mybookflix.co.uk/search?q=" + this.state.value)
         .then(res => res.json())
         .then(res => {
           var filteredSearch = [];
@@ -36,13 +36,13 @@ class Search extends React.Component {
           appState.setState({search: filteredSearch});
         })
     }
-  
+
     render() {
       return (
           <form onSubmit={this.handleSubmit}>
             <input id="search" type="text" value={this.state.value} onChange={this.handleChange} placeholder="Search" />
           </form>
-        
+
       );
     }
   }
